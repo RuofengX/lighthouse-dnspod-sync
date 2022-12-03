@@ -12,8 +12,8 @@ class Status(Enum):
 
 class CommonModel(BaseModel):
     stage: str
-    detail: dict = Field(default_factory=dict)
     result: Status = Status.SUCCESS
+    detail: dict = Field(default_factory=dict)
     e: Optional[ExceptionModel] = None
 
     def when_except(self, e: Exception):

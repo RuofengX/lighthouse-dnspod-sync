@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import json
 import tomllib
-from pprint import pprint as print
 from dataclasses import dataclass
 
 from tencentcloud.common import credential  # type:ignore
@@ -38,7 +37,7 @@ def change_dns(
         # 实例化一个认证对象，入参需要传入腾讯云账户secretId，secretKey,此处还需注意密钥对的保密
         # 密钥可前往https://console.cloud.tencent.com/cam/capi网站进行获取
         c = CredProvider.from_file(
-            "/data/data/com.termux/files/home/.tencent_cloud/credentials"
+            "~/.tencent_cloud/credentials"
         )
         cred = credential.Credential(c.sid, c.skey)
         # 实例化一个http选项，可选的，没有特殊需求可以跳过
@@ -70,8 +69,8 @@ def change_dns(
         # 实例化一个请求对象,每个接口都会对应一个request对象
         req = models.ModifyRecordRequest()
         params = {
-            "Domain": "s-2.link",
-            "SubDomain": "init",
+            "Domain": domain,
+            "SubDomain": sub_domain,
             "RecordType": "A",
             "Value": ip_address,
             "RecordId": record_id,
@@ -81,7 +80,6 @@ def change_dns(
 
         # 返回的resp是一个ModifyRecordResponse的实例，与请求对象对应
         resp = client.ModifyRecord(req)
-        # 输出json格式的字符串回包
 
     except Exception as e:
         rtn.when_except(e)
@@ -92,7 +90,3 @@ def change_dns(
         else:
             rtn.detail = {}
         return rtn
-
-
-if __name__ == "__main__":
-    print(change_dns("1.1.1.1"))

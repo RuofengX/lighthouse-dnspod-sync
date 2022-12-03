@@ -18,7 +18,11 @@ async def renew_static_ipv4(instance_name: str, debug: bool = False) -> CommonMo
 
     try:
         renew_response = renew(client, instance_name, debug)
-        dns_response = change_dns(renew_response.detail['new_ip'])
+        dns_response = change_dns(
+            ip_address=renew_response.detail['new_ip'],
+            domain='s-2.link',
+            sub_domain='init',
+        )
 
     except Exception as e:
         rtn.when_except(e)

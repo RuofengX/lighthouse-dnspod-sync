@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import tomllib
 from dataclasses import dataclass
 
@@ -19,6 +20,8 @@ class CredProvider:
 
     @staticmethod
     def from_file(path: str) -> CredProvider:
+        path = os.path.expanduser(path)
+        
         with open(path, "rb") as f:
             data = tomllib.load(f)
         _ = data["dns_edit"]

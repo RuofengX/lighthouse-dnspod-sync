@@ -33,7 +33,7 @@ class CredProvider:
 
 def change_dns(
     ip_address: str, domain: str = "s-2.link", sub_domain: str = "init"
-) -> dict:
+) -> CommonModel:
     rtn = CommonModel(stage="change_dns")
     resp = None
     try:

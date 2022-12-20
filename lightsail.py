@@ -10,6 +10,8 @@ def random_str(length: int = 6) -> str:
 
 def clean_up(client, debug: bool = False) -> CommonModel:
     rtn = CommonModel(stage='clean_up')
+    old_ipv4_list = []
+    release_list = []
     try:
         static_ipv4_list = client.get_static_ips()["staticIps"]
         old_ipv4_list = static_ipv4_list
@@ -46,6 +48,7 @@ def renew(
     extra = {
         'step': '0',
     }
+    old_ipv4_name = ''
 
     try:
         # 1. Prepare
